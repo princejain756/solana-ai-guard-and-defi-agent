@@ -49,6 +49,19 @@ export async function requestHandler(req, res) {
     }
   }
 
+  if (urlObj.pathname === "/audit-briefing.mp3") {
+    const mp3Path = path.join(PUBLIC_DIR, "audit-briefing.mp3");
+    if (fs.existsSync(mp3Path)) {
+      const buf = fs.readFileSync(mp3Path);
+      res.writeHead(200, {
+        "content-type": "audio/mpeg",
+        "cache-control": "public, max-age=3600"
+      });
+      res.end(buf);
+      return;
+    }
+  }
+
   if (urlObj.pathname === "/api/solana-live") {
     const prompt = urlObj.searchParams.get("prompt") || undefined;
     const payload = await buildFullPayload(prompt);
@@ -520,6 +533,7 @@ export async function requestHandler(req, res) {
           <span>AGENT VAULT: <strong>${data.aiPlan.agentWallet}</strong></span>
           <span>SESSION SIGNER: <strong>${data.aiPlan.ephemeralSessionSigner.slice(0, 20)}...</strong></span>
           <span>POLICY CAP: <strong>2.00 SOL / EPOCH</strong></span>
+          <span style="display:inline-flex;align-items:center;gap:8px;">ELEVENLABS VOICE BRIEFING: <audio controls preload="none" src="/audit-briefing.mp3" style="height:22px;width:190px;vertical-align:middle;"></audio></span>
         </div>
       </div>
       <div class="emblem-frame">

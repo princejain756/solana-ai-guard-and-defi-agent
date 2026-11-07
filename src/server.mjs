@@ -312,9 +312,13 @@ export async function requestHandler(req, res) {
     /* Two-Column Architectural Workspace */
     .workspace-grid {
       display: grid;
-      grid-template-columns: 1.22fr 0.78fr;
-      gap: 28px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: 24px;
       align-items: start;
+    }
+
+    .workspace-grid > div {
+      min-width: 0;
     }
 
     .ledger-section {
@@ -410,6 +414,7 @@ export async function requestHandler(req, res) {
     td.mono {
       font-family: var(--font-mono);
       font-size: 12px;
+      overflow-wrap: anywhere;
     }
 
     .chip-pass {

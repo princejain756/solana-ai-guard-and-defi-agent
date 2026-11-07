@@ -1,5 +1,11 @@
 {
+  "functions": {
+    "api/*.mjs": {
+      "includeFiles": "public/**"
+    }
+  },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index.mjs" }
+    { "source": "/api/(.*)", "destination": "/api/index.mjs" },
+    { "source": "/", "destination": "/api/index.mjs" }
   ]
 }

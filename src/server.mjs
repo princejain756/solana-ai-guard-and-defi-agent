@@ -199,8 +199,8 @@ export async function requestHandler(req, res) {
     }
 
     .emblem-frame {
-      width: 210px;
-      height: 210px;
+      width: 224px;
+      height: 216px;
       border: 1px solid var(--rule-strong);
       background: var(--paper);
       padding: 6px;
@@ -211,7 +211,7 @@ export async function requestHandler(req, res) {
 
     .emblem-frame img {
       width: 100%;
-      height: 172px;
+      height: 180px;
       object-fit: cover;
       display: block;
       border: 1px solid var(--rule);
@@ -221,10 +221,11 @@ export async function requestHandler(req, res) {
       font-family: var(--font-mono);
       font-size: 9.5px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: var(--ink-muted);
       display: flex;
       justify-content: space-between;
+      white-space: nowrap;
       padding-top: 4px;
     }
 
@@ -323,30 +324,34 @@ export async function requestHandler(req, res) {
     }
 
     .section-head {
-      padding: 14px 20px;
+      padding: 12px 18px;
       border-bottom: 1px solid var(--rule);
       background: var(--stone);
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
+      gap: 12px;
     }
 
     .section-head h2 {
       font-family: var(--font-serif);
-      font-size: 23px;
+      font-size: 21px;
       font-weight: 400;
       color: var(--ink);
+      white-space: nowrap;
     }
 
     .spec-tag {
       font-family: var(--font-mono);
-      font-size: 10.5px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       padding: 2px 8px;
       border: 1px solid var(--rule-strong);
       background: var(--surface);
       color: var(--ink);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .section-body {
@@ -358,12 +363,18 @@ export async function requestHandler(req, res) {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 16px;
-      margin-bottom: 16px;
+      gap: 16px;
+      padding: 11px 16px;
+      margin-bottom: 14px;
       border-left: 4px solid ${isBlocked ? "var(--signal-vermilion)" : "var(--clearing-green)"};
       background: ${isBlocked ? "var(--signal-vermilion-bg)" : "var(--clearing-green-bg)"};
       font-family: var(--font-mono);
       font-size: 12px;
+    }
+
+    .verdict-banner > span:last-child {
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .verdict-title {
@@ -447,12 +458,13 @@ export async function requestHandler(req, res) {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+      gap: 12px;
       margin-bottom: 4px;
     }
 
     .quest-name {
       font-weight: 600;
-      font-size: 13.5px;
+      font-size: 13px;
       color: var(--ink);
     }
 
@@ -461,6 +473,8 @@ export async function requestHandler(req, res) {
       font-size: 11px;
       color: var(--clearing-green);
       font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .quest-badge {

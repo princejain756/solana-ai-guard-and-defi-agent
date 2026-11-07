@@ -5,6 +5,7 @@
     }
   },
   "rewrites": [
+    { "source": "/actions.json", "destination": "/api/index.mjs" },
     { "source": "/api/(.*)", "destination": "/api/index.mjs" },
     { "source": "/", "destination": "/api/index.mjs" }
   ]

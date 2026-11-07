@@ -14,6 +14,14 @@ import {
   buildDeFiRoutesAndSolanaPay,
   getOnChainGamingQuests
 } from "./solana-engine.mjs";
+import { CPI_THREAT_SIGNATURES, evaluatePromptAgainstSignatures } from "./cpi-threat-signatures.mjs";
+import { buildVerifiedAnchorCatalog } from "./anchor-idl-inspector.mjs";
+import {
+  SOLANA_ACTIONS_CORS_HEADERS,
+  getActionsJsonManifest,
+  buildActionGetMetadata,
+  buildActionPostResponse
+} from "./solana-actions-blink.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.resolve(__dirname, "..", "public");
@@ -60,6 +68,46 @@ export async function requestHandler(req, res) {
       res.end(buf);
       return;
     }
+  }
+
+  if (urlObj.pathname === "/actions.json") {
+    res.writeHead(200, { "content-type": "application/json", ...SOLANA_ACTIONS_CORS_HEADERS });
+    res.end(JSON.stringify(getActionsJsonManifest(), null, 2));
+    return;
+  }
+
+  if (urlObj.pathname === "/api/actions/audit") {
+    if (req.method === "OPTIONS") {
+      res.writeHead(200, SOLANA_ACTIONS_CORS_HEADERS);
+      res.end();
+      return;
+    }
+    if (req.method === "POST") {
+      const prompt = urlObj.searchParams.get("prompt") || undefined;
+      const bodyOut = buildActionPostResponse({ prompt });
+      res.writeHead(200, { "content-type": "application/json", ...SOLANA_ACTIONS_CORS_HEADERS });
+      res.end(JSON.stringify(bodyOut, null, 2));
+      return;
+    }
+    res.writeHead(200, { "content-type": "application/json", ...SOLANA_ACTIONS_CORS_HEADERS });
+    res.end(JSON.stringify(buildActionGetMetadata(), null, 2));
+    return;
+  }
+
+  if (urlObj.pathname === "/api/cpi-signatures") {
+    const prompt = urlObj.searchParams.get("prompt") || "";
+    res.writeHead(200, { "content-type": "application/json" });
+    res.end(JSON.stringify({
+      signatures: CPI_THREAT_SIGNATURES,
+      evaluation: prompt ? evaluatePromptAgainstSignatures(prompt) : null
+    }, null, 2));
+    return;
+  }
+
+  if (urlObj.pathname === "/api/anchor-decode") {
+    res.writeHead(200, { "content-type": "application/json" });
+    res.end(JSON.stringify(buildVerifiedAnchorCatalog(), null, 2));
+    return;
   }
 
   if (urlObj.pathname === "/api/solana-live") {

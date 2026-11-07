@@ -1,0 +1,12 @@
+{
+  "name": "solana-ai-guard-and-defi-agent",
+  "version": "1.0.0",
+  "description": "SolanaSentinel: Autonomous AI Transaction Firewall, Natural-Language DeFi Router, Solana Pay Checkout, and On-Chain Verifiable Quest Arena on Solana Devnet",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "verify": "node src/server.mjs --verify"
+  },
+  "author": "Prince Jain",
+  "license": "MIT"
+}
